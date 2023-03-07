@@ -49,6 +49,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _counter2 = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -58,6 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  void _incrementCounter2() {
+    setState(() {
+      _counter2++;
+      print(_counter2);
     });
   }
 
@@ -102,6 +110,11 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            FloatingActionButton(
+              onPressed: _incrementCounter2,
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            )
           ],
         ),
       ),
@@ -109,7 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
