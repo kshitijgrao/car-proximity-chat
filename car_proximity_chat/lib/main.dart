@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Base UI Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Car Proximity Chat'),
     );
   }
 }
@@ -65,7 +65,27 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter2() {
     setState(() {
       _counter2++;
-      print(_counter2);
+      //print(_counter2);
+    });
+  }
+
+  String s = 'Press this button to join Proximity Chat!';
+  Color c = const Color.fromARGB(255, 30, 113, 196);
+  Icon i = const Icon(Icons.car_rental_rounded);
+
+  void _setButtonState() {
+    setState(() {
+      _incrementCounter2();
+      if (_counter2 % 2 == 0) {
+        s = ('Press this button to join Proximity Chat!');
+        c = const Color.fromARGB(255, 30, 113, 196);
+        i = const Icon(Icons.car_repair);
+      } else {
+        s = ('You are successfully connected to Proximity Chat.');
+        c = const Color.fromARGB(255, 245, 101, 34);
+        i = const Icon(Icons.phone);
+      }
+      print(s);
     });
   }
 
@@ -103,26 +123,33 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              // if (_counter2 % 2 == 0) {
+              //   'Press the Button to Join Proximity Chat!'
+              // } else {
+              //   'You are connected to Proximity Chat.'
+              // }
+              s,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
             FloatingActionButton(
-              onPressed: _incrementCounter2,
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
+              onPressed: _setButtonState,
+              tooltip: 'Join Chat!',
+              backgroundColor: c,
+              child: i,
             )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
