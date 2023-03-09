@@ -1,0 +1,16 @@
+com.example.location_test.app-jetified-window-java-1.0.0-beta04-0 /Users/KshitijRao/.gradle/caches/transforms-3/006d93cd422dbc43e89591147c2de572/transformed/jetified-window-java-1.0.0-beta04/res
+com.example.location_test.app-jetified-play-services-base-18.1.0-1 /Users/KshitijRao/.gradle/caches/transforms-3/24bd5ae211488322aa8c48f41a7bee4d/transformed/jetified-play-services-base-18.1.0/res
+com.example.location_test.app-core-1.9.0-2 /Users/KshitijRao/.gradle/caches/transforms-3/5f80b20db3afa86c72a9766b008d752d/transformed/core-1.9.0/res
+com.example.location_test.app-lifecycle-runtime-2.3.1-3 /Users/KshitijRao/.gradle/caches/transforms-3/76da31ad033c53187dd7271282d0f7d2/transformed/lifecycle-runtime-2.3.1/res
+com.example.location_test.app-jetified-window-1.0.0-beta04-4 /Users/KshitijRao/.gradle/caches/transforms-3/dee59bb480020f42d53c2ea15e4501f7/transformed/jetified-window-1.0.0-beta04/res
+com.example.location_test.app-jetified-annotation-experimental-1.3.0-5 /Users/KshitijRao/.gradle/caches/transforms-3/ec10578641139d45a328c567f48881a1/transformed/jetified-annotation-experimental-1.3.0/res
+com.example.location_test.app-jetified-play-services-basement-18.1.0-6 /Users/KshitijRao/.gradle/caches/transforms-3/f46b9773282b7a3d38863a46e0e0b5d1/transformed/jetified-play-services-basement-18.1.0/res
+com.example.location_test.app-debug-7 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/android/app/src/debug/res
+com.example.location_test.app-main-8 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/android/app/src/main/res
+com.example.location_test.app-pngs-9 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/generated/res/pngs/debug
+com.example.location_test.app-resValues-10 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/generated/res/resValues/debug
+com.example.location_test.app-rs-11 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/generated/res/rs/debug
+com.example.location_test.app-mergeDebugResources-12 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.example.location_test.app-mergeDebugResources-13 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.example.location_test.app-merged_res-14 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/app/intermediates/merged_res/debug
+com.example.location_test.app-packaged_res-15 /Users/KshitijRao/Documents/Development/choice-project-car-chat/Mini-Projects/location_test/build/geolocator_android/intermediates/packaged_res/debug
