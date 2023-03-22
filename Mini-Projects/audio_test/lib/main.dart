@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
-const String appId = "<--Insert app ID here-->";
+const String appId = "0bd5fc2320a84d468ace95ca4e467743";
 
 void main() => runApp(const MaterialApp(home: MyApp()));
 
@@ -16,8 +16,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String channelName = "<--Insert channel name here-->";
-  String token = "<--Insert authentication token here-->";
+  String channelName = "test_rao-ks";
+  String token =
+      "007eJxTYHh/pePztTuBriUnJC9Ix4pMv3z+lP2xyfty0tmDF20wP/RdgcEgKcU0LdnI2Mgg0cIkxcTMIjE51dI0OdEk1cTM3NzEeK2MdEpDICMD/65uZkYGCATxuRlKUotL4osS83WzixkYAAIII78=";
 
   int uid = 0; // uid of the local user
 
