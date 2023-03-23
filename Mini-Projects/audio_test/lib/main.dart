@@ -16,9 +16,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String channelName = "test_rao-ks";
+  String channelName = "ksrao";
   String token =
-      "007eJxTYHh/pePztTuBriUnJC9Ix4pMv3z+lP2xyfty0tmDF20wP/RdgcEgKcU0LdnI2Mgg0cIkxcTMIjE51dI0OdEk1cTM3NzEeK2MdEpDICMD/65uZkYGCATxuRlKUotL4osS83WzixkYAAIII78=";
+      "007eJxTYNi21CsmrnJmvcQ2U4v9F5Rcnys8/fHFYuHKBfdt76+4YmWuwGCQlGKalmxkbGSQaGGSYmJmkZicammanGiSamJmbm5i/KRQJqUhkJHhl5gEAyMUgvisDNnFRYn5DAwAz1Ugzw==";
 
   int uid = 0; // uid of the local user
 
