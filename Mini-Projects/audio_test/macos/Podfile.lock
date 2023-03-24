@@ -1,0 +1,80 @@
+PODS:
+  - agora_rtc_engine (0.0.1):
+    - AgoraIrisRTC_macOS (= 4.1.0-rc.2)
+    - AgoraRtcEngine_macOS (= 4.1.0)
+    - FlutterMacOS
+  - AgoraIrisEventFlutter_macOS (2.0.0)
+  - AgoraIrisRTC_macOS (4.1.0-rc.2)
+  - AgoraRtcEngine_macOS (4.1.0):
+    - AgoraRtcEngine_macOS/AIAEC (= 4.1.0)
+    - AgoraRtcEngine_macOS/AINS (= 4.1.0)
+    - AgoraRtcEngine_macOS/AudioBeauty (= 4.1.0)
+    - AgoraRtcEngine_macOS/ClearVision (= 4.1.0)
+    - AgoraRtcEngine_macOS/ContentInspect (= 4.1.0)
+    - AgoraRtcEngine_macOS/DRM (= 4.1.0)
+    - AgoraRtcEngine_macOS/RtcBasic (= 4.1.0)
+    - AgoraRtcEngine_macOS/SpatialAudio (= 4.1.0)
+    - AgoraRtcEngine_macOS/VirtualBackground (= 4.1.0)
+    - AgoraRtcEngine_macOS/VQA (= 4.1.0)
+  - AgoraRtcEngine_macOS/AIAEC (4.1.0)
+  - AgoraRtcEngine_macOS/AINS (4.1.0)
+  - AgoraRtcEngine_macOS/AudioBeauty (4.1.0)
+  - AgoraRtcEngine_macOS/ClearVision (4.1.0)
+  - AgoraRtcEngine_macOS/ContentInspect (4.1.0)
+  - AgoraRtcEngine_macOS/DRM (4.1.0)
+  - AgoraRtcEngine_macOS/RtcBasic (4.1.0)
+  - AgoraRtcEngine_macOS/SpatialAudio (4.1.0)
+  - AgoraRtcEngine_macOS/VirtualBackground (4.1.0)
+  - AgoraRtcEngine_macOS/VQA (4.1.0)
+  - flutter_webrtc (0.9.22):
+    - FlutterMacOS
+    - WebRTC-SDK (= 104.5112.12)
+  - FlutterMacOS (1.0.0)
+  - iris_event (0.0.1):
+    - AgoraIrisEventFlutter_macOS (= 2.0.0)
+    - FlutterMacOS
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - WebRTC-SDK (104.5112.12)
+
+DEPENDENCIES:
+  - agora_rtc_engine (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos`)
+  - flutter_webrtc (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - iris_event (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraIrisEventFlutter_macOS
+    - AgoraIrisRTC_macOS
+    - AgoraRtcEngine_macOS
+    - WebRTC-SDK
+
+EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos
+  flutter_webrtc:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  iris_event:
+    :path: Flutter/ephemeral/.symlinks/plugins/iris_event/macos
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+
+SPEC CHECKSUMS:
+  agora_rtc_engine: 66e8168cc1facc5fffd751021e80fee9031a7f33
+  AgoraIrisEventFlutter_macOS: 5e70ca5f37ccae44efcf8cc0ebd616b60f513263
+  AgoraIrisRTC_macOS: 5bed4136e6f88e54ea3472857a01154fd409dc79
+  AgoraRtcEngine_macOS: 35a0ad69ed2d5fa0632d751f41b09c5c9538ee59
+  flutter_webrtc: 0e2af3876ed28d4599c06734c771c2526309356b
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  iris_event: f12d7c4b6ee729c4dbd394cd374d9ddb4db56ad4
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  WebRTC-SDK: 6469c304549f7187e7e67119c8b3184f9ec6b7f6
+
+PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
+
+COCOAPODS: 1.12.0
