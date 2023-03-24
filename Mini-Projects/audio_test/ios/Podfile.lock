@@ -34,6 +34,8 @@ PODS:
   - flutter_webrtc (0.9.20):
     - Flutter
     - WebRTC-SDK (= 104.5112.09)
+  - geolocator_apple (1.2.0):
+    - Flutter
   - iris_event (0.0.1):
     - AgoraIrisEventFlutter_iOS (= 2.0.0)
     - Flutter
@@ -48,6 +50,7 @@ DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - Flutter (from `Flutter`)
   - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - iris_event (from `.symlinks/plugins/iris_event/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -66,6 +69,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_webrtc:
     :path: ".symlinks/plugins/flutter_webrtc/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   iris_event:
     :path: ".symlinks/plugins/iris_event/ios"
   path_provider_foundation:
@@ -80,6 +85,7 @@ SPEC CHECKSUMS:
   AgoraRtcEngine_iOS: 33f0136ad4196b2a31c8470e6b536fe77fb25f8b
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_webrtc: 15c5fb4ea324f3178ff97c0f02b9467b85977e42
+  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   iris_event: fdcf9bbb53095fd9609ea19941df551d0398a789
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
