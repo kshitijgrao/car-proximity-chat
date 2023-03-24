@@ -1,5 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
+import 'dart:math';
+
+import 'package:geolocator/geolocator.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -16,6 +21,48 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  //location things
+  Position? _currentPosition;
+  Position? _remoteUserPosition = Position.fromMap({'latitude': 37.7857, 'longitude': -122.4063});
+
+  int volume = 100;
+  double dist = 0;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  
+
+
+
+
   String channelName = "ksrao";
   String token =
       "007eJxTYNi21CsmrnJmvcQ2U4v9F5Rcnys8/fHFYuHKBfdt76+4YmWuwGCQlGKalmxkbGSQaGGSYmJmkZicammanGiSamJmbm5i/KRQJqUhkJHhl5gEAyMUgvisDNnFRYn5DAwAz1Ugzw==";
@@ -25,6 +72,10 @@ class _MyAppState extends State<MyApp> {
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
   late RtcEngine agoraEngine; // Agora engine instance
+
+
+  
+
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
@@ -48,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                   Expanded(
                     child: ElevatedButton(
                       child: const Text("Join"),
-                      onPressed: () => {join()},
+                      onPressed: () => {join(),_getCurrentPosition()},
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -75,6 +126,8 @@ class _MyAppState extends State<MyApp> {
     } else {
       statusText = 'Connected to remote user, uid:$_remoteUid';
     }
+
+    statusText = statusText + 'VOL: ${volume} DIST: ${dist} LOCAL: lat: ${_currentPosition?.latitude ?? ""}, long: ${_currentPosition?.longitude ?? ""} and REM: lat: ${_remoteUserPosition?.latitude ?? ""}, long: ${_remoteUserPosition?.longitude ?? ""}';
 
     return Text(
       statusText,
@@ -157,4 +210,46 @@ class _MyAppState extends State<MyApp> {
       content: Text(message),
     ));
   }
+
+  //minimum distance in meters used to scale volume
+  static const double minDist = 0.5;
+  static const double logScale = 21;
+  //equation: volume = 100 - logScale * log(dist / minDist)
+  //desmos: https://www.desmos.com/calculator/4ru6fkksrt
+
+  int getVolume(Position? pos1, Position? pos2){
+      if(pos1 == null || pos2 == null){
+        return 0;
+      }
+      dist = Geolocator.distanceBetween(pos1.latitude, pos1.longitude, pos2.latitude, pos2.longitude);
+      if(dist <= minDist){
+        return 100;
+      }
+      else{
+        return max((100 - logScale * log(dist / minDist)).toInt(), 0);
+      }
+  }
+
+  //location stuff
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    Future.delayed(Duration(milliseconds: 100)).then((_) async {
+      if (!hasPermission) return;
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) {
+        setState(() => _currentPosition = position);
+      }).catchError((e) {
+        debugPrint(e);
+      });
+      _getCurrentPosition();
+      if(_remoteUid != null){
+        agoraEngine.adjustUserPlaybackSignalVolume(uid:_remoteUid!, volume:getVolume(_currentPosition,_remoteUserPosition));
+      }
+        
+      volume = getVolume(_currentPosition,_remoteUserPosition);
+
+    });
+  }
+
 }
