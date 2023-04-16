@@ -1,0 +1,117 @@
+PODS:
+  - agora_rtc_engine (0.0.1):
+    - AgoraIrisRTC_macOS (= 4.1.0-rc.2)
+    - AgoraRtcEngine_macOS (= 4.1.0)
+    - FlutterMacOS
+  - AgoraIrisEventFlutter_macOS (2.0.0)
+  - AgoraIrisRTC_macOS (4.1.0-rc.2)
+  - AgoraRtcEngine_macOS (4.1.0):
+    - AgoraRtcEngine_macOS/AIAEC (= 4.1.0)
+    - AgoraRtcEngine_macOS/AINS (= 4.1.0)
+    - AgoraRtcEngine_macOS/AudioBeauty (= 4.1.0)
+    - AgoraRtcEngine_macOS/ClearVision (= 4.1.0)
+    - AgoraRtcEngine_macOS/ContentInspect (= 4.1.0)
+    - AgoraRtcEngine_macOS/DRM (= 4.1.0)
+    - AgoraRtcEngine_macOS/RtcBasic (= 4.1.0)
+    - AgoraRtcEngine_macOS/SpatialAudio (= 4.1.0)
+    - AgoraRtcEngine_macOS/VirtualBackground (= 4.1.0)
+    - AgoraRtcEngine_macOS/VQA (= 4.1.0)
+  - AgoraRtcEngine_macOS/AIAEC (4.1.0)
+  - AgoraRtcEngine_macOS/AINS (4.1.0)
+  - AgoraRtcEngine_macOS/AudioBeauty (4.1.0)
+  - AgoraRtcEngine_macOS/ClearVision (4.1.0)
+  - AgoraRtcEngine_macOS/ContentInspect (4.1.0)
+  - AgoraRtcEngine_macOS/DRM (4.1.0)
+  - AgoraRtcEngine_macOS/RtcBasic (4.1.0)
+  - AgoraRtcEngine_macOS/SpatialAudio (4.1.0)
+  - AgoraRtcEngine_macOS/VirtualBackground (4.1.0)
+  - AgoraRtcEngine_macOS/VQA (4.1.0)
+  - Firebase/CoreOnly (10.7.0):
+    - FirebaseCore (= 10.7.0)
+  - firebase_core (2.9.0):
+    - Firebase/CoreOnly (~> 10.7.0)
+    - FlutterMacOS
+  - FirebaseCore (10.7.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreInternal (10.8.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - flutter_webrtc (0.9.22):
+    - FlutterMacOS
+    - WebRTC-SDK (= 104.5112.12)
+  - FlutterMacOS (1.0.0)
+  - geolocator_apple (1.2.0):
+    - FlutterMacOS
+  - GoogleUtilities/Environment (7.11.1):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.11.1):
+    - GoogleUtilities/Environment
+  - "GoogleUtilities/NSData+zlib (7.11.1)"
+  - iris_event (0.0.1):
+    - AgoraIrisEventFlutter_macOS (= 2.0.0)
+    - FlutterMacOS
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - PromisesObjC (2.2.0)
+  - WebRTC-SDK (104.5112.12)
+
+DEPENDENCIES:
+  - agora_rtc_engine (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos`)
+  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - flutter_webrtc (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - geolocator_apple (from `Flutter/ephemeral/.symlinks/plugins/geolocator_apple/macos`)
+  - iris_event (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraIrisEventFlutter_macOS
+    - AgoraIrisRTC_macOS
+    - AgoraRtcEngine_macOS
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - GoogleUtilities
+    - PromisesObjC
+    - WebRTC-SDK
+
+EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos
+  firebase_core:
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+  flutter_webrtc:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  geolocator_apple:
+    :path: Flutter/ephemeral/.symlinks/plugins/geolocator_apple/macos
+  iris_event:
+    :path: Flutter/ephemeral/.symlinks/plugins/iris_event/macos
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+
+SPEC CHECKSUMS:
+  agora_rtc_engine: 66e8168cc1facc5fffd751021e80fee9031a7f33
+  AgoraIrisEventFlutter_macOS: 5e70ca5f37ccae44efcf8cc0ebd616b60f513263
+  AgoraIrisRTC_macOS: 5bed4136e6f88e54ea3472857a01154fd409dc79
+  AgoraRtcEngine_macOS: 35a0ad69ed2d5fa0632d751f41b09c5c9538ee59
+  Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
+  firebase_core: b2f73bfbb070109d2149e257a786e3093f99a9da
+  FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
+  FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
+  flutter_webrtc: 0e2af3876ed28d4599c06734c771c2526309356b
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  geolocator_apple: 72a78ae3f3e4ec0db62117bd93e34523f5011d58
+  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
+  iris_event: f12d7c4b6ee729c4dbd394cd374d9ddb4db56ad4
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  WebRTC-SDK: 6469c304549f7187e7e67119c8b3184f9ec6b7f6
+
+PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
+
+COCOAPODS: 1.12.0
