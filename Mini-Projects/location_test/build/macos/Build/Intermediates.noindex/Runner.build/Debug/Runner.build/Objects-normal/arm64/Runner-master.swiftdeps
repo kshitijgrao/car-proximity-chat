@@ -1,0 +1,9 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "bea04c7da385dd58b1dffac70b2433daefd54fea8361815106284b69209b99ce"
+build_start_time: [1679327830, 413486957]
+build_end_time: [1679327832, 40210008]
+inputs:
+  ? "/Users/hiteshm/Documents/GitHub/choice-project-car-chat/Mini-Projects/location_test/macos/Flutter/GeneratedPluginRegistrant.swift"
+  : [1679327824, 663499355]
+  "/Users/hiteshm/Documents/GitHub/choice-project-car-chat/Mini-Projects/location_test/macos/Runner/AppDelegate.swift": [1678808359, 754832029]
+  "/Users/hiteshm/Documents/GitHub/choice-project-car-chat/Mini-Projects/location_test/macos/Runner/MainFlutterWindow.swift": [1678808359, 757030487]

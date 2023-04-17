@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "343426553612",
+    "project_id": "prox-94507",
+    "storage_bucket": "prox-94507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343426553612:android:7b385a98e71a4e41505b29",
+        "android_client_info": {
+          "package_name": "com.example.audio_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343426553612-s4vts7kgcfu8sirhi4ktm0incnm5dss4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmHRVdvF2EoDjoejdkxB6mdYwGmImi4mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343426553612-s4vts7kgcfu8sirhi4ktm0incnm5dss4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343426553612-7i3l8rm4sv29isva8i27vanpmie5d1h2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.audioTest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
