@@ -18,7 +18,7 @@ void sendUpdate(msg) {
   // We use a try - catch statement, because the connection might fail.
   try {
     // Connect to our backend.
-    channel = IOWebSocketChannel.connect('ws://localhost:3000');
+    channel = IOWebSocketChannel.connect('ws://localhost:1000');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             children: [
               // Status text
-              SizedBox(height: 40, child: Center(child: _status())),
+              SizedBox(height: 100, child: Center(child: _status())),
               // Button Row
               Row(
                 children: <Widget>[
@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
                       onPressed: () => {
                         _getCurrentPosition(),
                         sendUpdate(
-                            "${_currentPosition?.latitude},${_currentPosition?.longitude}")
+                            "${uid},${_currentPosition?.latitude},${_currentPosition?.longitude}")
                       },
                     ),
                   ),
