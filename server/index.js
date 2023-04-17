@@ -12,6 +12,8 @@ const wss = new Server({ server });
 wss.on("connection", function (ws, req) {
   ws.on("message", (message) => {
     var dataString = message.toString();
-    console.log(dataString);
+    out = dataString.split(",");
+    console.log(out[0]);
+    console.log(out[1]);
   });
 });

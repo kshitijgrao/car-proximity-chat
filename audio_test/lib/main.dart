@@ -13,7 +13,7 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 const String appId = "0bd5fc2320a84d468ace95ca4e467743";
 
 // This function will send the message to our backend.
-void sendMessage(msg) {
+void sendUpdate(msg) {
   IOWebSocketChannel? channel;
   // We use a try - catch statement, because the connection might fail.
   try {
@@ -125,7 +125,18 @@ class _MyAppState extends State<MyApp> {
                   Expanded(
                     child: ElevatedButton(
                       child: const Text("Leave"),
-                      onPressed: () => {sendMessage("heyyyy")},
+                      onPressed: () => {leave()},
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                      child: const Text("Update"),
+                      onPressed: () => {
+                        _getCurrentPosition(),
+                        sendUpdate(
+                            "${_currentPosition?.latitude},${_currentPosition?.longitude}")
+                      },
                     ),
                   ),
                 ],
