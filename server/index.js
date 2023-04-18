@@ -1,7 +1,7 @@
 const express = require("express");
 const { Server } = require("ws");
 
-const PORT = process.env.PORT || 1000; //port for https
+const PORT = process.env.PORT || 2000; //port for https
 
 const server = express()
   .use((req, res) => res.send("Hi there"))
@@ -19,7 +19,6 @@ wss.on("connection", function (ws, req) {
       arr.set(out[0], out);
     }
     console.log(out[0]);
-    console.log(out[1]);
-    console.log(arr);
+    console.log(out);
   });
 });
