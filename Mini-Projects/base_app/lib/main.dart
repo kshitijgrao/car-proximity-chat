@@ -47,6 +47,25 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class CallJoinPage extends StatelessWidget {
+  const CallJoinPage({Key key, required this.title}) : super(key: key);
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {},
+          child: const Text('Go Back'),
+        ),
+      ),
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   // int _counter = 0;
   int _counter2 = 0;
