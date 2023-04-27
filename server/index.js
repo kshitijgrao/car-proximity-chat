@@ -16,9 +16,9 @@ wss.on("connection", function (ws, req) {
     var dataString = message.toString();
     out = dataString.split(",");
     if (out[0] != 0) {
-      arr.set(out[0], out);
+      arr.set(out[0], new Array(out[1], out[2]));
     }
     console.log(out[0]);
-    console.log(out);
+    console.log(arr);
   });
 });

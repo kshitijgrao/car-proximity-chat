@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYHBalzkpqcu1TrU8oXRWaPv0Y7x/f7Aes27gmDPZxnz3FE4FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPj03vtUhoCGRmEFmcyMjJAIIjPypCdXpSYz8AAAA3bHnQ=";
+      "007eJxTYGia9mZzZ2NjwYap/dOybM7tTmzW+JbbZBGYuS++r+qwlYYCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYlx3zSvlIZARoYnzI0MjFAI4rMyZKcXJeYzMAAAxsAgdQ==";
 
   int uid = 0;
   int? docUID = 10; // uid of the local user
