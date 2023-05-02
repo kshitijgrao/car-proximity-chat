@@ -87,7 +87,9 @@ class CallJoinPage extends StatelessWidget {
       ),
       body: Center(
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: const Text('Go Back'),
         ),
       ),
