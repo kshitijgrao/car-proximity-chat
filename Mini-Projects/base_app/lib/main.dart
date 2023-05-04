@@ -4,6 +4,10 @@ void main() {
   runApp(const MyApp());
 }
 
+Icon muteIcon = Icon(Icons.mic);
+Color micCol = Color.fromARGB(255, 255, 255, 255);
+bool muteState = false;
+
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -76,32 +80,80 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// class CallJoinPage extends StatelessWidget {
+//   const CallJoinPage({Key? key, required this.title}) : super(key: key);
+//   final String title;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(title),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             const Text("Call is Joined!"),
+//             // Text(
+//             //   '$_counter',
+//             //   style: Theme.of(context).textTheme.headlineMedium,
+//             // ),
+//             FloatingActionButton(
+//               onPressed: () {},
+//               tooltip: 'Call Joined!',
+//               backgroundColor: const Color.fromARGB(255, 30, 113, 196),
+//               child: const Icon(Icons.local_phone_rounded),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class CallJoinPage extends StatelessWidget {
   const CallJoinPage({Key? key, required this.title}) : super(key: key);
   final String title;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text("Call is Joined!"),
-            // Text(
-            //   '$_counter',
-            //   style: Theme.of(context).textTheme.headlineMedium,
-            // ),
-            FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Call Joined!',
-              backgroundColor: const Color.fromARGB(255, 30, 113, 196),
-              child: const Icon(Icons.local_phone_rounded),
-            )
-          ],
-        ),
+      floatingActionButton: Wrap(
+        //will break to another line on overflow
+        direction: Axis.vertical, //use vertical to show  on vertical axis
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {},
+                tooltip: 'Call Joined!',
+                heroTag: "join",
+                backgroundColor: const Color.fromARGB(255, 30, 113, 196),
+                child: const Icon(Icons.local_phone_rounded),
+              )), //button first
+
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  muteState = !muteState;
+                  if (muteState) {
+                    muteIcon = Icon(Icons.mic_off);
+                    micCol = Color.fromARGB(255, 214, 39, 59);
+                  } else {
+                    muteIcon = Icon(Icons.mic);
+                    micCol = Color.fromARGB(255, 0, 0, 0);
+                  }
+                },
+                tooltip: 'Mute!',
+                heroTag: "mute",
+                backgroundColor: micCol,
+                child: muteIcon,
+              )), // button second
+        ],
       ),
     );
   }
