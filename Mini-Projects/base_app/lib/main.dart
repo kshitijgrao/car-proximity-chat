@@ -31,7 +31,7 @@ class FirstPage extends StatelessWidget {
             FloatingActionButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const CallJoinPage(title: 'SecondPage');
+                  return const CallJoinPage(title: 'Call Joined');
                 }));
               },
               tooltip: 'Join Chat!',
@@ -86,11 +86,21 @@ class CallJoinPage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go Back'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text("Call is Joined!"),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
+            FloatingActionButton(
+              onPressed: () {},
+              tooltip: 'Call Joined!',
+              backgroundColor: const Color.fromARGB(255, 30, 113, 196),
+              child: const Icon(Icons.local_phone_rounded),
+            )
+          ],
         ),
       ),
     );
