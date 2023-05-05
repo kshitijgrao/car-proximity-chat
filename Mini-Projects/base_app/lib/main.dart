@@ -4,10 +4,6 @@ void main() {
   runApp(const MyApp());
 }
 
-Icon muteIcon = Icon(Icons.mic);
-Color micCol = Color.fromARGB(255, 255, 255, 255);
-bool muteState = false;
-
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -35,7 +31,7 @@ class FirstPage extends StatelessWidget {
             FloatingActionButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const CallJoinPage(title: 'Call Joined');
+                  return CallJoinPage(title: 'Call Joined');
                 }));
               },
               tooltip: 'Join Chat!',
@@ -112,8 +108,12 @@ class MyApp extends StatelessWidget {
 // }
 
 class CallJoinPage extends StatelessWidget {
-  const CallJoinPage({Key? key, required this.title}) : super(key: key);
+  CallJoinPage({Key? key, required this.title}) : super(key: key);
   final String title;
+
+  Icon muteIcon = Icon(Icons.mic);
+  Color micCol = Color.fromARGB(255, 90, 80, 80);
+  bool muteState = false;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class CallJoinPage extends StatelessWidget {
                     micCol = Color.fromARGB(255, 214, 39, 59);
                   } else {
                     muteIcon = Icon(Icons.mic);
-                    micCol = Color.fromARGB(255, 0, 0, 0);
+                    micCol = Color.fromARGB(255, 90, 80, 80);
                   }
                 },
                 tooltip: 'Mute!',
