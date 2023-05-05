@@ -18,7 +18,7 @@ void sendUpdate(msg) {
   // We use a try - catch statement, because the connection might fail.
   try {
     // Connect to our backend.
-    channel = IOWebSocketChannel.connect('ws://localhost:2000');
+    channel = IOWebSocketChannel.connect('ws://192.0.2.2:2000');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -31,6 +31,7 @@ void sendUpdate(msg) {
     // Just making sure it is not empty
     if (event!.isNotEmpty) {
       print(event);
+
       // Now only close the connection and we are done here!
       channel!.sink.close();
     }
@@ -88,7 +89,7 @@ class _MyAppState extends State<MyApp> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYGia9mZzZ2NjwYap/dOybM7tTmzW+JbbZBGYuS++r+qwlYYCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYlx3zSvlIZARoYnzI0MjFAI4rMyZKcXJeYzMAAAxsAgdQ==";
+      "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
 
   int uid = 0;
   int? docUID = 10; // uid of the local user
