@@ -107,19 +107,37 @@ class MyApp extends StatelessWidget {
 //   }
 // }
 
-class CallJoinPage extends StatelessWidget {
+class CallJoinPage extends StatefulWidget {
   CallJoinPage({Key? key, required this.title}) : super(key: key);
-  final String title;
 
+  final String title;
+  @override
+  _CallJoinPageState createState() => _CallJoinPageState();
+}
+
+class _CallJoinPageState extends State<CallJoinPage> {
   Icon muteIcon = Icon(Icons.mic);
   Color micCol = Color.fromARGB(255, 90, 80, 80);
   bool muteState = false;
+
+  void _changeMute() {
+    setState(() {
+      muteState = !muteState;
+      if (muteState) {
+        muteIcon = Icon(Icons.mic_off);
+        micCol = Color.fromARGB(255, 214, 39, 59);
+      } else {
+        muteIcon = Icon(Icons.mic);
+        micCol = Color.fromARGB(255, 90, 80, 80);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text("Car Proximity Chat"),
       ),
       floatingActionButton: Wrap(
         //will break to another line on overflow
@@ -138,16 +156,7 @@ class CallJoinPage extends StatelessWidget {
           Container(
               margin: const EdgeInsets.all(10),
               child: FloatingActionButton(
-                onPressed: () {
-                  muteState = !muteState;
-                  if (muteState) {
-                    muteIcon = Icon(Icons.mic_off);
-                    micCol = Color.fromARGB(255, 214, 39, 59);
-                  } else {
-                    muteIcon = Icon(Icons.mic);
-                    micCol = Color.fromARGB(255, 90, 80, 80);
-                  }
-                },
+                onPressed: _changeMute,
                 tooltip: 'Mute!',
                 heroTag: "mute",
                 backgroundColor: micCol,
