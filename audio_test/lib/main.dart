@@ -91,8 +91,13 @@ class _MyAppState extends State<MyApp> {
   String token =
       "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
 
-  int uid = 0;
+
+  int? uid = 0; // uid of the local user
+
+  var remoteUsers = <int,double>{}; //map holding uids and distances of other users
+
   int? docUID = 10; // uid of the local user
+
 
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
@@ -159,9 +164,6 @@ class _MyAppState extends State<MyApp> {
       statusText = 'Connected to remote user, uid:$_remoteUid';
     }
 
-    statusText = statusText +
-        'VOL: ${volume} DIST: ${dist} LOCAL: lat: ${_currentPosition?.latitude ?? ""}, long: ${_currentPosition?.longitude ?? ""} and REM: lat: ${_remoteUserPosition?.latitude ?? ""}, long: ${_remoteUserPosition?.longitude ?? ""}';
-
     return Text(
       statusText,
     );
@@ -191,6 +193,7 @@ class _MyAppState extends State<MyApp> {
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
+            uid = connection.localUid;
           });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
@@ -257,10 +260,27 @@ class _MyAppState extends State<MyApp> {
     }
     dist = Geolocator.distanceBetween(
         pos1.latitude, pos1.longitude, pos2.latitude, pos2.longitude);
+    return getVolumeFromDist(dist);
+  }
+  int getVolumeFromDist(double? dist){
+    if(dist == null){
+      return 0;
+    }
     if (dist <= minDist) {
       return 100;
     } else {
       return max((100 - logScale * log(dist / minDist)).toInt(), 0);
+    }
+  }
+
+  void setOtherVolumes(Map<int, double> dists){
+    for(int uidKey in dists.keys) { 
+      if(uidKey != uid){
+        agoraEngine.adjustUserPlaybackSignalVolume(
+          uid: uidKey,
+          volume: getVolumeFromDist(dists[uidKey])
+        );
+      }
     }
   }
 
@@ -277,13 +297,7 @@ class _MyAppState extends State<MyApp> {
         debugPrint(e);
       });
       _getCurrentPosition();
-      if (_remoteUid != null) {
-        agoraEngine.adjustUserPlaybackSignalVolume(
-            uid: _remoteUid!,
-            volume: getVolume(_currentPosition, _remoteUserPosition));
-      }
-
-      volume = getVolume(_currentPosition, _remoteUserPosition);
+      setOtherVolumes(remoteUsers);
     });
   }
 }
