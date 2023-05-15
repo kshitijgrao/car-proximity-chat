@@ -18,7 +18,7 @@ void sendUpdate(msg) {
   // We use a try - catch statement, because the connection might fail.
   try {
     // Connect to our backend.
-    channel = IOWebSocketChannel.connect('ws://localhost:3000');
+    channel = IOWebSocketChannel.connect('ws://192.0.2.2:2000');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -31,6 +31,7 @@ void sendUpdate(msg) {
     // Just making sure it is not empty
     if (event!.isNotEmpty) {
       print(event);
+
       // Now only close the connection and we are done here!
       channel!.sink.close();
     }
@@ -86,13 +87,17 @@ class _MyAppState extends State<MyApp> {
     return true;
   }
 
-  String channelName = "ksrao";
+  String channelName = "kgrao";
   String token =
-      "007eJxTYNi21CsmrnJmvcQ2U4v9F5Rcnys8/fHFYuHKBfdt76+4YmWuwGCQlGKalmxkbGSQaGGSYmJmkZicammanGiSamJmbm5i/KRQJqUhkJHhl5gEAyMUgvisDNnFRYn5DAwAz1Ugzw==";
+      "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
+
 
   int? uid = 0; // uid of the local user
 
   var remoteUsers = <int,double>{}; //map holding uids and distances of other users
+
+  int? docUID = 10; // uid of the local user
+
 
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
@@ -113,7 +118,7 @@ class _MyAppState extends State<MyApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             children: [
               // Status text
-              SizedBox(height: 40, child: Center(child: _status())),
+              SizedBox(height: 100, child: Center(child: _status())),
               // Button Row
               Row(
                 children: <Widget>[
@@ -137,7 +142,7 @@ class _MyAppState extends State<MyApp> {
                       onPressed: () => {
                         _getCurrentPosition(),
                         sendUpdate(
-                            "${_currentPosition?.latitude},${_currentPosition?.longitude}")
+                            "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}")
                       },
                     ),
                   ),
@@ -183,6 +188,7 @@ class _MyAppState extends State<MyApp> {
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          docUID = connection.localUid;
           showMessage(
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
