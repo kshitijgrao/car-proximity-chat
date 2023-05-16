@@ -42,6 +42,53 @@ void main() async {
   runApp(const MaterialApp(home: MyApp()));
 }
 
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key? key, required this.title}) : super(key: key);
+  final String title;
+  final String s = 'Press this button to join Proximity Chat!';
+  final Color c = const Color.fromARGB(255, 30, 113, 196);
+  final Icon i = const Icon(Icons.car_rental_rounded);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Demo"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              s,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CallJoinPage(title: 'Call Joined');
+                }));
+              },
+              tooltip: 'Join Chat!',
+              backgroundColor: c,
+              child: i,
+            )
+          ],
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -91,13 +138,12 @@ class _MyAppState extends State<MyApp> {
   String token =
       "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
 
+  int uid = 0; // uid of the local user
 
-  int? uid = 0; // uid of the local user
-
-  var remoteUsers = <int,double>{}; //map holding uids and distances of other users
+  var remoteUsers =
+      <int, double>{}; //map holding u ids and distances of other users
 
   int? docUID = 10; // uid of the local user
-
 
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
@@ -110,46 +156,47 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldMessengerKey,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Get started with Voice Calling'),
-          ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            children: [
-              // Status text
-              SizedBox(height: 100, child: Center(child: _status())),
-              // Button Row
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Join"),
-                      onPressed: () => {join(), _getCurrentPosition()},
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Leave"),
-                      onPressed: () => {leave()},
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Update"),
-                      onPressed: () => {
-                        _getCurrentPosition(),
-                        sendUpdate(
-                            "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}")
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )),
+      // home: Scaffold(
+      //     appBar: AppBar(
+      //       title: const Text('Get started with Voice Calling'),
+      //     ),
+      //     body: ListView(
+      //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      //       children: [
+      //         // Status text
+      //         SizedBox(height: 100, child: Center(child: _status())),
+      //         // Button Row
+      //         Row(
+      //           children: <Widget>[
+      //             Expanded(
+      //               child: ElevatedButton(
+      //                 child: const Text("Join"),
+      //                 onPressed: () => {join(), _getCurrentPosition()},
+      //               ),
+      //             ),
+      //             const SizedBox(width: 10),
+      //             Expanded(
+      //               child: ElevatedButton(
+      //                 child: const Text("Leave"),
+      //                 onPressed: () => {leave()},
+      //               ),
+      //             ),
+      //             const SizedBox(width: 10),
+      //             Expanded(
+      //               child: ElevatedButton(
+      //                 child: const Text("Update"),
+      //                 onPressed: () => {
+      //                   _getCurrentPosition(),
+      //                   sendUpdate(
+      //                       "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}")
+      //                 },
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ],
+      //     )),
+      home: const FirstPage(title: 'Car Proximity Chat'),
     );
   }
 
@@ -193,7 +240,7 @@ class _MyAppState extends State<MyApp> {
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
-            uid = connection.localUid;
+            docUID = connection.localUid;
           });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
@@ -262,8 +309,9 @@ class _MyAppState extends State<MyApp> {
         pos1.latitude, pos1.longitude, pos2.latitude, pos2.longitude);
     return getVolumeFromDist(dist);
   }
-  int getVolumeFromDist(double? dist){
-    if(dist == null){
+
+  int getVolumeFromDist(double? dist) {
+    if (dist == null) {
       return 0;
     }
     if (dist <= minDist) {
@@ -273,13 +321,11 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  void setOtherVolumes(Map<int, double> dists){
-    for(int uidKey in dists.keys) { 
-      if(uidKey != uid){
+  void setOtherVolumes(Map<int, double> dists) {
+    for (int uidKey in dists.keys) {
+      if (uidKey != uid) {
         agoraEngine.adjustUserPlaybackSignalVolume(
-          uid: uidKey,
-          volume: getVolumeFromDist(dists[uidKey])
-        );
+            uid: uidKey, volume: getVolumeFromDist(dists[uidKey]));
       }
     }
   }
@@ -299,5 +345,66 @@ class _MyAppState extends State<MyApp> {
       _getCurrentPosition();
       setOtherVolumes(remoteUsers);
     });
+  }
+}
+
+class CallJoinPage extends StatefulWidget {
+  CallJoinPage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _CallJoinPageState createState() => _CallJoinPageState();
+}
+
+class _CallJoinPageState extends State<CallJoinPage> {
+  Icon muteIcon = Icon(Icons.mic);
+  Color micCol = Color.fromARGB(255, 90, 80, 80);
+  bool muteState = false;
+
+  void _changeMute() {
+    setState(() {
+      muteState = !muteState;
+      if (muteState) {
+        muteIcon = Icon(Icons.mic_off);
+        micCol = Color.fromARGB(255, 214, 39, 59);
+      } else {
+        muteIcon = Icon(Icons.mic);
+        micCol = Color.fromARGB(255, 90, 80, 80);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Car Proximity Chat"),
+      ),
+      floatingActionButton: Wrap(
+        //will break to another line on overflow
+        direction: Axis.vertical, //use vertical to show  on vertical axis
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {},
+                tooltip: 'Call Joined!',
+                heroTag: "join",
+                backgroundColor: const Color.fromARGB(255, 30, 113, 196),
+                child: const Icon(Icons.local_phone_rounded),
+              )), //button first
+
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: _changeMute,
+                tooltip: 'Mute!',
+                heroTag: "mute",
+                backgroundColor: micCol,
+                child: muteIcon,
+              )), // button second
+        ],
+      ),
+    );
   }
 }
