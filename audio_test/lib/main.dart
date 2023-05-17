@@ -89,15 +89,40 @@ class FirstPage extends StatelessWidget {
   }
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Base UI Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      home: const FirstPage(title: 'Car Proximity Chat'),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  //location things
+class CallJoinPage extends StatefulWidget {
+  CallJoinPage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _CallJoinPageState createState() => _CallJoinPageState();
+}
+
+class _CallJoinPageState extends State<CallJoinPage> {
   Position? _currentPosition;
   Position? _remoteUserPosition =
       Position.fromMap({'latitude': 37.7857, 'longitude': -122.4063});
@@ -152,53 +177,13 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      // home: Scaffold(
-      //     appBar: AppBar(
-      //       title: const Text('Get started with Voice Calling'),
-      //     ),
-      //     body: ListView(
-      //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      //       children: [
-      //         // Status text
-      //         SizedBox(height: 100, child: Center(child: _status())),
-      //         // Button Row
-      //         Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: ElevatedButton(
-      //                 child: const Text("Join"),
-      //                 onPressed: () => {join(), _getCurrentPosition()},
-      //               ),
-      //             ),
-      //             const SizedBox(width: 10),
-      //             Expanded(
-      //               child: ElevatedButton(
-      //                 child: const Text("Leave"),
-      //                 onPressed: () => {leave()},
-      //               ),
-      //             ),
-      //             const SizedBox(width: 10),
-      //             Expanded(
-      //               child: ElevatedButton(
-      //                 child: const Text("Update"),
-      //                 onPressed: () => {
-      //                   _getCurrentPosition(),
-      //                   sendUpdate(
-      //                       "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}")
-      //                 },
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     )),
-      home: const FirstPage(title: 'Car Proximity Chat'),
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     scaffoldMessengerKey: scaffoldMessengerKey,
+  //     home: const FirstPage(title: 'Car Proximity Chat'),
+  //   );
+  // }
 
   Widget _status() {
     String statusText;
@@ -346,17 +331,7 @@ class _MyAppState extends State<MyApp> {
       setOtherVolumes(remoteUsers);
     });
   }
-}
 
-class CallJoinPage extends StatefulWidget {
-  CallJoinPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-  @override
-  _CallJoinPageState createState() => _CallJoinPageState();
-}
-
-class _CallJoinPageState extends State<CallJoinPage> {
   Icon muteIcon = Icon(Icons.mic);
   Color micCol = Color.fromARGB(255, 90, 80, 80);
   bool muteState = false;
@@ -387,7 +362,9 @@ class _CallJoinPageState extends State<CallJoinPage> {
           Container(
               margin: const EdgeInsets.all(10),
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  join();
+                },
                 tooltip: 'Call Joined!',
                 heroTag: "join",
                 backgroundColor: const Color.fromARGB(255, 30, 113, 196),
