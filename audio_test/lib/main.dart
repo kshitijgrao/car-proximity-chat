@@ -161,7 +161,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
+      "007eJxTYPj74dczRdulAaydX4s1Te/slK/Yvp2f9Z3SIuVdEbcSF/5SYDBISjFNSzYyNjJItDBJMTGzSExOtTRNTjRJNTEzNzcxdviSktIQyMgQcaqUgREKQXxWhuz0osR8BgYA5k0hNQ==";
 
   int uid = 0; // uid of the local user
 
@@ -225,6 +225,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
+            _changeCallIcon();
             docUID = connection.localUid;
           });
         },
@@ -334,6 +335,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
 
   Icon muteIcon = Icon(Icons.mic);
   Color micCol = Color.fromARGB(255, 90, 80, 80);
+  Color callCol = Color.fromARGB(255, 40, 147, 223);
   bool muteState = false;
 
   void _changeMute() {
@@ -345,6 +347,16 @@ class _CallJoinPageState extends State<CallJoinPage> {
       } else {
         muteIcon = Icon(Icons.mic);
         micCol = Color.fromARGB(255, 90, 80, 80);
+      }
+    });
+  }
+
+  void _changeCallIcon() {
+    setState(() {
+      if (_isJoined) {
+        callCol = Color.fromARGB(255, 31, 224, 21);
+      } else {
+        callCol = Color.fromARGB(255, 40, 147, 223);
       }
     });
   }
@@ -364,10 +376,12 @@ class _CallJoinPageState extends State<CallJoinPage> {
               child: FloatingActionButton(
                 onPressed: () {
                   join();
+                  _changeCallIcon();
+                  print(_status());
                 },
                 tooltip: 'Call Joined!',
                 heroTag: "join",
-                backgroundColor: const Color.fromARGB(255, 30, 113, 196),
+                backgroundColor: callCol,
                 child: const Icon(Icons.local_phone_rounded),
               )), //button first
 
@@ -379,7 +393,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
                 heroTag: "mute",
                 backgroundColor: micCol,
                 child: muteIcon,
-              )), // button second
+              )) // button second
         ],
       ),
     );
