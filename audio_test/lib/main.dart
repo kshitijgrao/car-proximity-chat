@@ -18,7 +18,9 @@ void sendUpdate(msg) {
   // We use a try - catch statement, because the connection might fail.
   try {
     // Connect to our backend.
-    channel = IOWebSocketChannel.connect('ws://192.0.2.2:2000');
+
+    channel = IOWebSocketChannel.connect(
+        'ws://3214-2a09-bac1-76a0-fe8-00-21d-32.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
