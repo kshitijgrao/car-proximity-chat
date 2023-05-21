@@ -20,6 +20,14 @@ wss.on("connection", function (ws, req) {
       arr.set(out[0], new Array(out[1], out[2]));
     }
     console.log(outputDistanceArray());
+    const uids = new Array();
+    const distances = new Array();
+    ws.send("herro");
+    outputDistanceArray().forEach((key, value) => {
+      uids.append(key);
+      distances.append(value);
+    });
+    //ws.send(uids.concat(distances));
   });
 });
 

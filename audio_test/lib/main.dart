@@ -20,7 +20,7 @@ void sendUpdate(msg) {
     // Connect to our backend.
 
     channel = IOWebSocketChannel.connect(
-        'ws://3214-2a09-bac1-76a0-fe8-00-21d-32.ngrok-free.app');
+        'ws://7c78-2a09-bac1-36a0-40-00-31-9e.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -31,7 +31,7 @@ void sendUpdate(msg) {
   // Listen for any message from backend
   channel?.stream.listen((event) {
     // Just making sure it is not empty
-    if (event!.isNotEmpty) {
+    if (event != null) {
       print(event);
 
       // Now only close the connection and we are done here!
@@ -163,7 +163,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYPj74dczRdulAaydX4s1Te/slK/Yvp2f9Z3SIuVdEbcSF/5SYDBISjFNSzYyNjJItDBJMTGzSExOtTRNTjRJNTEzNzcxdviSktIQyMgQcaqUgREKQXxWhuz0osR8BgYA5k0hNQ==";
+      "007eJxTYOh9YFf54Xh1YHeJuEj2hPhjGbtiF6uscAnivFBjynWHc7kCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYnx90lZKQ2BjAzHrk1hYWSAQBCflSE7vSgxn4EBAEqEH+M=";
 
   int uid = 0; // uid of the local user
 
@@ -390,7 +390,11 @@ class _CallJoinPageState extends State<CallJoinPage> {
           Container(
               margin: const EdgeInsets.all(10),
               child: FloatingActionButton(
-                onPressed: _changeMute,
+                onPressed: () {
+                  _changeMute();
+                  sendUpdate(
+                      "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}");
+                },
                 tooltip: 'Mute!',
                 heroTag: "mute",
                 backgroundColor: micCol,
