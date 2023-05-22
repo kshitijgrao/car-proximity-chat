@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 import 'dart:math';
@@ -12,6 +14,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
 const String appId = "0bd5fc2320a84d468ace95ca4e467743";
 
+var remoteUsers =
+    <int, double>{}; //map holding u ids and distances of other users
 // This function will send the message to our backend.
 void sendUpdate(msg) {
   IOWebSocketChannel? channel;
@@ -31,8 +35,27 @@ void sendUpdate(msg) {
   // Listen for any message from backend
   channel?.stream.listen((event) {
     // Just making sure it is not empty
+
     if (event != null) {
-      print(event);
+      var dataJson = json.decode(event.toString());
+      var keys = [];
+      var vals = [];
+      var zFlip = false;
+
+      for (var val in dataJson) {
+        if (val != 0 && zFlip == false) {
+          keys.add(val);
+        } else if (zFlip) {
+          vals.add(val);
+        } else {
+          zFlip = true;
+        }
+      }
+
+      for (int i = 0; i < keys.length; i++) {
+        remoteUsers[keys[i]] = vals[i].toDouble();
+      }
+      //const keys = new Array(event)
 
       // Now only close the connection and we are done here!
       channel!.sink.close();
@@ -166,9 +189,6 @@ class _CallJoinPageState extends State<CallJoinPage> {
       "007eJxTYOh9YFf54Xh1YHeJuEj2hPhjGbtiF6uscAnivFBjynWHc7kCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYnx90lZKQ2BjAzHrk1hYWSAQBCflSE7vSgxn4EBAEqEH+M=";
 
   int uid = 0; // uid of the local user
-
-  var remoteUsers =
-      <int, double>{}; //map holding u ids and distances of other users
 
   int? docUID = 10; // uid of the local user
 
