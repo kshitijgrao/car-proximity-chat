@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 import 'dart:math';
@@ -12,13 +14,17 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
 const String appId = "0bd5fc2320a84d468ace95ca4e467743";
 
+var remoteUsers =
+    <int, double>{}; //map holding u ids and distances of other users
 // This function will send the message to our backend.
 void sendUpdate(msg) {
   IOWebSocketChannel? channel;
   // We use a try - catch statement, because the connection might fail.
   try {
     // Connect to our backend.
-    channel = IOWebSocketChannel.connect('ws://192.0.2.2:2000');
+
+    channel = IOWebSocketChannel.connect(
+        'ws://7c78-2a09-bac1-36a0-40-00-31-9e.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -29,8 +35,27 @@ void sendUpdate(msg) {
   // Listen for any message from backend
   channel?.stream.listen((event) {
     // Just making sure it is not empty
-    if (event!.isNotEmpty) {
-      print(event);
+
+    if (event != null) {
+      var dataJson = json.decode(event.toString());
+      var keys = [];
+      var vals = [];
+      var zFlip = false;
+
+      for (var val in dataJson) {
+        if (val != 0 && zFlip == false) {
+          keys.add(val);
+        } else if (zFlip) {
+          vals.add(val);
+        } else {
+          zFlip = true;
+        }
+      }
+
+      for (int i = 0; i < keys.length; i++) {
+        remoteUsers[keys[i]] = vals[i].toDouble();
+      }
+      //const keys = new Array(event)
 
       // Now only close the connection and we are done here!
       channel!.sink.close();
@@ -42,15 +67,87 @@ void main() async {
   runApp(const MaterialApp(home: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key? key, required this.title}) : super(key: key);
+  final String title;
+  final String s = 'Press this button to join Proximity Chat!';
+  final Color c = const Color.fromARGB(255, 30, 113, 196);
+  final Icon i = const Icon(Icons.car_rental_rounded);
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Demo"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              s,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CallJoinPage(title: 'Call Joined');
+                }));
+              },
+              tooltip: 'Join Chat!',
+              backgroundColor: c,
+              child: i,
+            )
+          ],
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  //location things
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Base UI Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      home: const FirstPage(title: 'Car Proximity Chat'),
+    );
+  }
+}
+
+class CallJoinPage extends StatefulWidget {
+  CallJoinPage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _CallJoinPageState createState() => _CallJoinPageState();
+}
+
+class _CallJoinPageState extends State<CallJoinPage> {
   Position? _currentPosition;
   Position? _remoteUserPosition =
       Position.fromMap({'latitude': 37.7857, 'longitude': -122.4063});
@@ -89,15 +186,11 @@ class _MyAppState extends State<MyApp> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYHiXPI9Pn+Or+RmxR2s+VH+wdD10to+jPk07RXP5RWtJZ34FBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjbI3QlIZARoZpdzmZGRkgEMRnZchOL0rMZ2AAABfEHhc=";
+      "007eJxTYOh9YFf54Xh1YHeJuEj2hPhjGbtiF6uscAnivFBjynWHc7kCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYnx90lZKQ2BjAzHrk1hYWSAQBCflSE7vSgxn4EBAEqEH+M=";
 
-
-  int? uid = 0; // uid of the local user
-
-  var remoteUsers = <int,double>{}; //map holding uids and distances of other users
+  int uid = 0; // uid of the local user
 
   int? docUID = 10; // uid of the local user
-
 
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
@@ -106,52 +199,13 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Get started with Voice Calling'),
-          ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            children: [
-              // Status text
-              SizedBox(height: 100, child: Center(child: _status())),
-              // Button Row
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Join"),
-                      onPressed: () => {join(), _getCurrentPosition()},
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Leave"),
-                      onPressed: () => {leave()},
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: const Text("Update"),
-                      onPressed: () => {
-                        _getCurrentPosition(),
-                        sendUpdate(
-                            "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}")
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )),
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     scaffoldMessengerKey: scaffoldMessengerKey,
+  //     home: const FirstPage(title: 'Car Proximity Chat'),
+  //   );
+  // }
 
   Widget _status() {
     String statusText;
@@ -193,7 +247,8 @@ class _MyAppState extends State<MyApp> {
               "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
-            uid = connection.localUid;
+            _changeCallIcon();
+            docUID = connection.localUid;
           });
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
@@ -262,8 +317,9 @@ class _MyAppState extends State<MyApp> {
         pos1.latitude, pos1.longitude, pos2.latitude, pos2.longitude);
     return getVolumeFromDist(dist);
   }
-  int getVolumeFromDist(double? dist){
-    if(dist == null){
+
+  int getVolumeFromDist(double? dist) {
+    if (dist == null) {
       return 0;
     }
     if (dist <= minDist) {
@@ -273,13 +329,11 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  void setOtherVolumes(Map<int, double> dists){
-    for(int uidKey in dists.keys) { 
-      if(uidKey != uid){
+  void setOtherVolumes(Map<int, double> dists) {
+    for (int uidKey in dists.keys) {
+      if (uidKey != uid) {
         agoraEngine.adjustUserPlaybackSignalVolume(
-          uid: uidKey,
-          volume: getVolumeFromDist(dists[uidKey])
-        );
+            uid: uidKey, volume: getVolumeFromDist(dists[uidKey]));
       }
     }
   }
@@ -299,5 +353,75 @@ class _MyAppState extends State<MyApp> {
       _getCurrentPosition();
       setOtherVolumes(remoteUsers);
     });
+  }
+
+  Icon muteIcon = Icon(Icons.mic);
+  Color micCol = Color.fromARGB(255, 90, 80, 80);
+  Color callCol = Color.fromARGB(255, 40, 147, 223);
+  bool muteState = false;
+
+  void _changeMute() {
+    setState(() {
+      muteState = !muteState;
+      if (muteState) {
+        muteIcon = Icon(Icons.mic_off);
+        micCol = Color.fromARGB(255, 214, 39, 59);
+      } else {
+        muteIcon = Icon(Icons.mic);
+        micCol = Color.fromARGB(255, 90, 80, 80);
+      }
+    });
+  }
+
+  void _changeCallIcon() {
+    setState(() {
+      if (_isJoined) {
+        callCol = Color.fromARGB(255, 31, 224, 21);
+      } else {
+        callCol = Color.fromARGB(255, 40, 147, 223);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Car Proximity Chat"),
+      ),
+      floatingActionButton: Wrap(
+        //will break to another line on overflow
+        direction: Axis.vertical, //use vertical to show  on vertical axis
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  join();
+                  _changeCallIcon();
+                  print(_status());
+                },
+                tooltip: 'Call Joined!',
+                heroTag: "join",
+                backgroundColor: callCol,
+                child: const Icon(Icons.local_phone_rounded),
+              )), //button first
+
+          Container(
+              margin: const EdgeInsets.all(10),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _changeMute();
+                  sendUpdate(
+                      "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}");
+                },
+                tooltip: 'Mute!',
+                heroTag: "mute",
+                backgroundColor: micCol,
+                child: muteIcon,
+              )) // button second
+        ],
+      ),
+    );
   }
 }

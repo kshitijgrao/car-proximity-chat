@@ -1,7 +1,7 @@
 const express = require("express");
 const { Server } = require("ws");
 
-const PORT = process.env.PORT || 2000; //port for https
+const PORT = 3000; //port for https
 
 const server = express()
   .use((req, res) => res.send("Hi there"))
@@ -12,6 +12,7 @@ const wss = new Server({ server });
 const arr = new Map();
 
 wss.on("connection", function (ws, req) {
+  console.log("hit");
   ws.on("message", (message) => {
     var dataString = message.toString();
     out = dataString.split(",");
@@ -19,6 +20,14 @@ wss.on("connection", function (ws, req) {
       arr.set(out[0], new Array(out[1], out[2]));
     }
     console.log(outputDistanceArray());
+    const uids = new Array();
+    const distances = new Array();
+    outputDistanceArray().forEach((key, value) => {
+      uids.append(key);
+      distances.append(value);
+    });
+    console.log(uids.concat(" ", distances));
+    ws.send(uids.concat(" ", distances));
   });
 });
 
