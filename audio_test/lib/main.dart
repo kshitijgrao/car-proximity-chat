@@ -370,6 +370,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
   void _changeMute() {
     setState(() {
       muteState = !muteState;
+      agoraEngine.muteAllRemoteAudioStreams(muteState);
       if (muteState) {
         muteIcon = Icon(Icons.mic_off);
         micCol = Color.fromARGB(255, 214, 39, 59);
