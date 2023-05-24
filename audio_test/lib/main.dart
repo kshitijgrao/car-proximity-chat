@@ -412,6 +412,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
               child: FloatingActionButton(
                 onPressed: () {
                   _changeMute();
+                  _getCurrentPosition();
                   sendUpdate(
                       "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}");
                 },
