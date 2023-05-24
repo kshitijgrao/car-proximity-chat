@@ -18,7 +18,6 @@ wss.on("connection", function (ws, req) {
     if (out[0] != 0) {
       arr.set(out[0], new Array(out[1], out[2]));
     }
-    console.log(arr);
     const uids = new Array();
     const distances = new Array();
     console.log(...outputDistanceArray(out[0], arr));
@@ -35,9 +34,12 @@ function outputDistanceArray(localUID, array) {
   const output = new Map();
 
   arr.forEach((val, key) => {
-    console.log("uid:" + key);
-    console.log("val:" + val);
-    output.set(key, distanceFormula(localLoc[0], localLoc[1], val[0], val[1]));
+    if (key != localUID) {
+      output.set(
+        key,
+        distanceFormula(localLoc[0], localLoc[1], val[0], val[1])
+      );
+    }
   });
   return output;
 }
