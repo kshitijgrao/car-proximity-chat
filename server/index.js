@@ -17,7 +17,7 @@ wss.on("connection", function (ws, req) {
     var dataString = message.toString();
     out = dataString.split(",");
     if (out[0] != 0) {
-      arr.set(out[0], new Array(out[1], out[2]));
+      arr.add(out[0], new Array(out[1], out[2]));
     }
     console.log(outputDistanceArray());
     const uids = new Array();
