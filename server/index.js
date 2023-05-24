@@ -10,11 +10,13 @@ const server = express()
 const wss = new Server({ server });
 
 const arr = new Map();
+arr.set(100, new Array(10, 10));
 
 wss.on("connection", function (ws, req) {
   ws.on("message", (message) => {
     var dataString = message.toString();
     out = dataString.split(",");
+    console.log("Input: " + dataString);
     if (out[0] != 0) {
       arr.set(out[0], new Array(out[1], out[2]));
     }
@@ -25,7 +27,7 @@ wss.on("connection", function (ws, req) {
       uids.push(key);
       distances.push(value);
     });
-    ws.send(uids.concat(" ", distances));
+    ws.send(distances.concat("0", uids).toString());
   });
 });
 
@@ -45,9 +47,18 @@ function outputDistanceArray(localUID, array) {
 }
 
 function distanceFormula(x1, y1, x2, y2) {
-  return 2 * (6378100) * Math.sqrt(sinSquare(x1,x2)+Math.cos(Math.PI/180 * x1) * Math.cos(Math.PI / 180 * x2) * sinSquare(y1,y2))
+  return (
+    2 *
+    6378100 *
+    Math.sqrt(
+      sinSquare(x1, x2) +
+        Math.cos((Math.PI / 180) * x1) *
+          Math.cos((Math.PI / 180) * x2) *
+          sinSquare(y1, y2)
+    )
+  );
 }
 
-function sinSquare(x1,x2){
-  return Math.pow(Math.sin((x1-x2)/2 * Math.PI/180),2)
+function sinSquare(x1, x2) {
+  return Math.pow(Math.sin((((x1 - x2) / 2) * Math.PI) / 180), 2);
 }

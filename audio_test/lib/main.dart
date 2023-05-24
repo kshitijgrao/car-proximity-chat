@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'dart:math';
@@ -24,7 +25,7 @@ void sendUpdate(msg) {
     // Connect to our backend.
 
     channel = IOWebSocketChannel.connect(
-        'ws://515b-2405-201-c00b-1118-8d22-3b90-e6f4-a75c.ngrok-free.app');
+        'ws://e965-2405-201-c00b-1118-8d22-3b90-e6f4-a75c.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -37,13 +38,14 @@ void sendUpdate(msg) {
     // Just making sure it is not empty
 
     if (event != null) {
-      var dataJson = json.decode(event.toString());
+      var dataJson = event.split(",");
+      print("Event + $event");
       var keys = [];
       var vals = [];
       var zFlip = false;
 
       for (var val in dataJson) {
-        if (val != 0 && zFlip == false) {
+        if (val != "0" && zFlip == false) {
           keys.add(val);
         } else if (zFlip) {
           vals.add(val);
@@ -53,10 +55,10 @@ void sendUpdate(msg) {
       }
 
       for (int i = 0; i < keys.length; i++) {
-        remoteUsers[keys[i]] = vals[i].toDouble();
+        remoteUsers[int.parse(keys[i])] = double.parse(vals[i]);
       }
       //const keys = new Array(event)
-
+      print("remoteUsers:" + remoteUsers.toString());
       // Now only close the connection and we are done here!
       channel!.sink.close();
     }
@@ -325,13 +327,15 @@ class _CallJoinPageState extends State<CallJoinPage> {
     if (dist <= minDist) {
       return 100;
     } else {
-      return max((100 - logScale * log(dist / minDist)).toInt(), 0);
+      return max((100 - (logScale * log(dist / minDist))).toInt(), 0);
     }
   }
 
   void setOtherVolumes(Map<int, double> dists) {
     for (int uidKey in dists.keys) {
+      print(uidKey);
       if (uidKey != uid) {
+        print("volume:" + getVolumeFromDist(dists[uidKey]).toString());
         agoraEngine.adjustUserPlaybackSignalVolume(
             uid: uidKey, volume: getVolumeFromDist(dists[uidKey]));
       }
@@ -341,7 +345,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
   //location stuff
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
-    Future.delayed(Duration(milliseconds: 100)).then((_) async {
+    Future.delayed(Duration(milliseconds: 1000)).then((_) async {
       if (!hasPermission) return;
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -350,8 +354,11 @@ class _CallJoinPageState extends State<CallJoinPage> {
       }).catchError((e) {
         debugPrint(e);
       });
-      _getCurrentPosition();
+      sendUpdate(
+          "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}");
+
       setOtherVolumes(remoteUsers);
+      _getCurrentPosition();
     });
   }
 
@@ -400,6 +407,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
                   join();
                   _changeCallIcon();
                   print(_status());
+                  _getCurrentPosition();
                 },
                 tooltip: 'Call Joined!',
                 heroTag: "join",
@@ -412,9 +420,6 @@ class _CallJoinPageState extends State<CallJoinPage> {
               child: FloatingActionButton(
                 onPressed: () {
                   _changeMute();
-                  _getCurrentPosition();
-                  sendUpdate(
-                      "${docUID},${_currentPosition?.latitude},${_currentPosition?.longitude}");
                 },
                 tooltip: 'Mute!',
                 heroTag: "mute",
