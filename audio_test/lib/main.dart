@@ -24,7 +24,7 @@ void sendUpdate(msg) {
     // Connect to our backend.
 
     channel = IOWebSocketChannel.connect(
-        'ws://7c78-2a09-bac1-36a0-40-00-31-9e.ngrok-free.app');
+        'ws://515b-2405-201-c00b-1118-8d22-3b90-e6f4-a75c.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
@@ -186,7 +186,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYOh9YFf54Xh1YHeJuEj2hPhjGbtiF6uscAnivFBjynWHc7kCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYnx90lZKQ2BjAzHrk1hYWSAQBCflSE7vSgxn4EBAEqEH+M=";
+      "007eJxTYKidrvVl1s4n/WIXPd4df3BV7SLzqUzzqReEuzr8bm9LbzNQYDBISjFNSzYyNjJItDBJMTGzSExOtTRNTjRJNTEzNzcxjmjNTWkIZGSo/TGdlZEBAkF8Vobs9KLEfAYGACCHIf0=";
 
   int uid = 0; // uid of the local user
 
