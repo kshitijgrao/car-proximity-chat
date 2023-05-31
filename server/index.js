@@ -10,13 +10,11 @@ const server = express()
 const wss = new Server({ server });
 
 const arr = new Map();
-arr.set(100, new Array(10, 10));
 
 wss.on("connection", function (ws, req) {
   ws.on("message", (message) => {
     var dataString = message.toString();
     out = dataString.split(",");
-    console.log("Input: " + dataString);
     if (out[0] != 0) {
       arr.set(out[0], new Array(out[1], out[2]));
     }
