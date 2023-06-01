@@ -239,6 +239,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
     //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
     await agoraEngine.initialize(const RtcEngineContext(appId: appId));
+    await agoraEngine.adjustRecordingSignalVolume(400);
 
     // Register the event handler
     agoraEngine.registerEventHandler(
