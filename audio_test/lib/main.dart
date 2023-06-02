@@ -188,7 +188,7 @@ class _CallJoinPageState extends State<CallJoinPage> {
 
   String channelName = "kgrao";
   String token =
-      "007eJxTYCh8veV520FbB5Z/bw3i39fpzL9WquUY0G9c21Db481+dYsCg0FSimlaspGxkUGihUmKiZlFYnKqpWlyokmqiZm5uYlx3sSylIZARoZL5vyMjAwQCOKzMmSnFyXmMzAAAJ95H88=";
+      "007eJxTYDDvefdHIO+Qwil9MZX5rgn/1odfTghOUWvfbjA7/Oo6Z1UFBoOkFNO0ZCNjI4NEC5MUEzOLxORUS9PkRJNUEzNzcxPjA4GVKQ2BjAy8tz6xMDJAIIjPypCdXpSYz8AAAEFHH3E=";
 
   int uid = 0; // uid of the local user
 
