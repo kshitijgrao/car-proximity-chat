@@ -25,7 +25,7 @@ void sendUpdate(msg) {
     // Connect to our backend.
 
     channel = IOWebSocketChannel.connect(
-        'ws://c35d-2a09-bac5-3b21-18be-00-277-7.ngrok-free.app');
+        'ws://0832-2a09-bac1-36c0-40-00-1f1-1f1.ngrok-free.app');
   } catch (e) {
     // If there is any error that might be because you need to use another connection.
     print("Error on connecting to websocket: " + e.toString());
